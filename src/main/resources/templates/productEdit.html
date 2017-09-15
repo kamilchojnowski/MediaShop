@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Edit product</title>
+</head>
+<body>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		document
+				.addEventListener(
+						"DOMContentLoaded",
+						function(event) {
+							$(document)
+									.ready(
+											function() {
+												var val1 = $("#select");
+												val1
+														.change(function() {
+															console
+																	.log("start");
+															$
+																	.ajax({
+																		url : "/subcategory/subcategory",
+																		type : 'get',
+																		dataType : 'json',
+																		data : "id="
+																				+ val1
+																						.val(),
+																		success : function(
+																				json) {
+																			var select2 = $("#select2");
+																			select2
+																					.find(
+																							"option")
+																					.remove()
+																			$
+																					.each(
+																							json,
+																							function(
+																									key,
+																									value) {
+																								select2
+																										.append("<option value=" + value.map.id + ">"
+																												+ value.map.name
+																												+ "</option>");
+																							})
+																			console
+																					.log("success");
+																		},
+																		error : function() {
+																			console
+																					.log("error");
+																		},
+																		complete : function() {
+																			console
+																					.log("done");
+																		}
+																	});
+														});
+											});
+						});
+	</script>
+	<div th:replace="fragments/header :: header"></div>
+	<form method="post" th:object="${product}">
+		<div>
+			<label for="name">Product name</label> <input type="text"
+				th:field="*{name}" />
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+		</div>
+		<div>
+			<label for="description">Description</label> <input type="text"
+				th:field="*{description}" />
+			<p th:if="${#fields.hasErrors('description')}"
+				th:errors="*{description}" />
+		</div>
+		<div>
+			<label for="price">Price</label> <input type="number"
+				th:field="*{price}" />
+			<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" />
+		</div>
+		<div>
+			<label for="quantity">Quantity</label> <input type="number"
+				th:field="*{quantity}" min="0" />
+			<p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" />
+		</div>
+		<div>
+			<label for="discount">Discount</label> <input type="number"
+				th:field="*{discount}" step="0.01" min="0" max="1" />
+			<p th:if="${#fields.hasErrors('discount')}" th:errors="*{discount}" />
+		</div>
+		<div>
+			<label for="category">Category</label> <select id="select">
+				<option selected="selected" disabled="disabled" value="">-- Choose --</option>
+				<option th:each="cat : ${availableCategories}" th:value="${cat.id}"
+					th:text="${cat.name}" />
+			</select>
+		</div>
+		<div>
+			<select id="select2" th:field="*{subcategories}" multiple="multiple"
+				name="subcategories">
+			</select>
+			<p th:if="${#fields.hasErrors('subcategories')}"
+				th:errors="*{subcategories}" />
+		</div>
+		<input type="submit" />
+	</form>
+</body>
+</html>

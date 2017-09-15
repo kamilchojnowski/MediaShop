@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Edit comment</title>
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	<form method="post" th:object="${comment}">
+		<div>
+			<label for="content">Comment</label> <input type="text"
+				th:field="*{content}" />
+			<p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" />
+		</div>
+		<div>
+			<label for="evaluation">Evaluation</label> <input type="number"
+				th:field="*{evaluation}" />
+			<p th:if="${#fields.hasErrors('evaluation')}"
+				th:errors="*{evaluation}" />
+		</div>
+		<div>
+			<select th:field="*{user}">
+				<option th:each="user : ${availableUsers}" th:value="${user.id}"
+					th:text="${user.username}" />
+			</select>
+			<p th:if="${#fields.hasErrors('user')}" th:errors="*{user}" />
+		</div>
+		<div>
+			<select th:field="*{product}">
+				<option selected="selected" disabled="disabled" value="">-- Choose --</option>
+				<option th:each="product : ${availableProducts}"
+					th:value="${product.id}" th:text="${product.name}" />
+			</select>
+			<p th:if="${#fields.hasErrors('product')}" th:errors="*{product}" />
+			<input type="submit" />
+		</div>
+	</form>
+</body>
+</html>
