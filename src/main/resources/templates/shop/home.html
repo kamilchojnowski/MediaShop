@@ -5,6 +5,8 @@
 <title>MediaShop</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../static/css/style.css" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/category.css" th:href="@{/css/category.css}" />
 </head>
 <body>
 	<script
@@ -26,6 +28,7 @@
 		});
 	</script>
 	<div th:replace="shop/headerShop :: headerShop"></div>
+	<div th:replace="shop/headerCategory :: headerCategory"></div>
 	<h3>Products</h3>
 	<table>
 		<tr>

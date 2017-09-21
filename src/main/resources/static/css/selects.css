@@ -1,6 +1,6 @@
 #selects {
     width: 500px;
-    overflow: hidden; /* add this to contain floated children */
+    overflow: hidden; 
 }
 #first {
 	text-align: center;

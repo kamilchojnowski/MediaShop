@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pl.coderslab.entity.Category;
 import pl.coderslab.entity.Comment;
 import pl.coderslab.entity.Order;
 import pl.coderslab.entity.OrderedItem;
@@ -24,6 +25,7 @@ import pl.coderslab.entity.User;
 import pl.coderslab.model.Cart;
 import pl.coderslab.model.ProductModel;
 import pl.coderslab.model.UserModel;
+import pl.coderslab.repository.CategoryRepository;
 import pl.coderslab.repository.CommentRepository;
 import pl.coderslab.repository.OrderRepository;
 import pl.coderslab.repository.OrderedItemRepository;
@@ -44,6 +46,8 @@ public class ShopUserController extends SessionedController {
 	private OrderRepository orderRepository;
 	@Autowired
 	private OrderedItemRepository orderedItemRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@GetMapping("/all")
 	public String all(Model model) {
@@ -214,6 +218,11 @@ public class ShopUserController extends SessionedController {
 	@ModelAttribute("availableUsers")
 	public List<User> availableUsers() {
 		return userRepository.findAll();
+	}
+	
+	@ModelAttribute("avaiableCategories")
+	public List<Category> availableCategories(){
+		return categoryRepository.findAll();
 	}
 
 	@GetMapping("login")
