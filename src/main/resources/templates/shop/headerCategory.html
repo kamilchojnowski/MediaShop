@@ -10,7 +10,7 @@
 <li th:each="category : ${avaiableCategories}" th:value="${category.name}" class="category">
 <a href="/home" th:text="${category.name}" class="main-link"></a>
 <ul hidden="hidden" class="link">
-<li class="item"><a href="/home">sss</a></li>
+<li class="item" th:each="sub : ${category.subcategories}"><a href="/home" th:text="${sub.name}"></a></li>
 </ul>
 </li></ul>
 </nav>
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 		else if(target.hasClass('category')){
 			target.children().eq(1).fadeOut(1);
 		} else {
-			target.parents().eq(1).fadeOut(1);
+			console.log(target);
 		}
 	})
 
