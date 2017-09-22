@@ -83,6 +83,62 @@ public class ShopUserController extends SessionedController {
 		model.addAttribute("products", list);
 		return "shop/home";
 	}
+	
+	@GetMapping("/searchCategory")
+	public String searchCategory(Model model, @RequestParam Long id){
+		UserModel userModel = new UserModel();
+		if (session().getAttribute("userModel") != null) {
+			userModel = (UserModel) session().getAttribute("userModel");
+		} else {
+			userModel.setCart(new Cart());
+		}
+		model.addAttribute("cart", "Cart: " + userModel.getCart().getProducts().size() + " items");
+		model.addAttribute("productModel", new ProductModel());
+		List<Product> products = productRepository.findBySubcategoriesCategoryId(id);
+		List<ProductModel> list = new ArrayList<ProductModel>();
+		for (Product product : products) {
+			ProductModel elem = new ProductModel();
+			elem.setId(product.getId());
+			elem.setName(product.getName());
+			elem.setDescription(product.getDescription().split(";"));
+			product.setCommentEvaluation();
+			elem.setEvaluation(product.getEvaluation());
+			elem.setPrice(product.getPrice() * product.getDiscount());
+			elem.setAmount(product.getQuantity());
+			elem.setQuantity(0);
+			list.add(elem);
+		}
+		model.addAttribute("products", list);
+		return "shop/home";
+	}
+	
+	@GetMapping("/searchSubcategory")
+	public String searchSubcategory(Model model, @RequestParam Long id){
+		UserModel userModel = new UserModel();
+		if (session().getAttribute("userModel") != null) {
+			userModel = (UserModel) session().getAttribute("userModel");
+		} else {
+			userModel.setCart(new Cart());
+		}
+		model.addAttribute("cart", "Cart: " + userModel.getCart().getProducts().size() + " items");
+		model.addAttribute("productModel", new ProductModel());
+		List<Product> products = productRepository.findBySubcategoriesId(id);
+		List<ProductModel> list = new ArrayList<ProductModel>();
+		for (Product product : products) {
+			ProductModel elem = new ProductModel();
+			elem.setId(product.getId());
+			elem.setName(product.getName());
+			elem.setDescription(product.getDescription().split(";"));
+			product.setCommentEvaluation();
+			elem.setEvaluation(product.getEvaluation());
+			elem.setPrice(product.getPrice() * product.getDiscount());
+			elem.setAmount(product.getQuantity());
+			elem.setQuantity(0);
+			list.add(elem);
+		}
+		model.addAttribute("products", list);
+		return "shop/home";
+	}
 
 	@GetMapping("/addcomment")
 	public String addComment(Model model, @RequestParam(name = "productId") Long id) {
