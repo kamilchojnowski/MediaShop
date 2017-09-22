@@ -8,9 +8,9 @@
 <nav id="categories">
 <ul id="menu">
 <li th:each="category : ${avaiableCategories}" th:value="${category.name}" class="category">
-<a href="/home" th:text="${category.name}" class="main-link"></a>
+<a th:href="@{/shopuser/searchCategory/(id=${category.id})}" th:text="${category.name}" class="main-link"></a>
 <ul hidden="hidden" class="link">
-<li class="item" th:each="sub : ${category.subcategories}"><a href="/home" th:text="${sub.name}"></a></li>
+<li class="item" th:each="sub : ${category.subcategories}"><a th:href="@{/shopuser/searchSubcategory/(id=${sub.id})}" th:text="${sub.name}"></a></li>
 </ul>
 </li></ul>
 </nav>
